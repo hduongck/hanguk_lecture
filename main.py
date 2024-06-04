@@ -65,6 +65,7 @@ def get_ticker_dfs(start,end):
     try:
         tickers, ticker_dfs = load_pickle("dataset.obj")
     except Exception as err:
+        print(err)
         tickers = get_sp500_tickers()
         starts = [start] * len(tickers)
         ends = [end] * len(tickers)
@@ -78,5 +79,5 @@ from utils import Alpha
 period_start = datetime(2014,1,1,tzinfo=pytz.utc)
 period_end = datetime.now(pytz.utc)
 tickers,ticker_dfs = get_ticker_dfs(start=period_start,end=period_end)
-alpha = Alpha(insts=tickers, dfs = ticker_dfs, start=period_start, end = period_end)
-alpha.run_simulation()
+# alpha = Alpha(insts=tickers, dfs = ticker_dfs, start=period_start, end = period_end)
+# alpha.run_simulation()
