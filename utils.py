@@ -73,6 +73,7 @@ class Alpha():
             for inst in eligibles:
                 forecast = 1 if inst in alpha_long else (-1 if inst in alpha_short else 0)
                 dollar_allocation = portfolio_df.loc[i, "capital"] / (len(alpha_long) + len(alpha_short))
+                
 
             # compute positions and other information
 
