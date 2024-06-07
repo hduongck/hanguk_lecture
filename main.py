@@ -38,9 +38,9 @@ def get_history(ticker, period_start, period_end, granularity="1d",tries=0):
     if df.empty:
         return pd.DataFrame()
     
-    df["datetime"] = df["datetime"]#.dt.tz_localize(pytz.utc)
+    df["datetime"] = df["datetime"].dt.tz_localize(None).dt.tz_localize(pytz.utc)
     df = df.drop(columns=["Dividends","Stock Splits"])
-    df = df.set_index("datetime",drop=True)
+    df = df.set_index(["datetime"],drop=True)
     return df
 
 def get_histories(tickers, period_starts, period_ends, granularity="1d"):
@@ -61,7 +61,7 @@ def get_histories(tickers, period_starts, period_ends, granularity="1d"):
     return tickers, dfs
 
 def get_ticker_dfs(start,end):
-    from utils import load_pickle, save_pickle
+    from utils import load_pickle, save_pickle 
     try:
         tickers, ticker_dfs = load_pickle("dataset.obj")
     except Exception as err:
@@ -79,5 +79,8 @@ from utils import Alpha
 period_start = datetime(2014,1,1,tzinfo=pytz.utc)
 period_end = datetime.now(pytz.utc)
 tickers,ticker_dfs = get_ticker_dfs(start=period_start,end=period_end)
-# alpha = Alpha(insts=tickers, dfs = ticker_dfs, start=period_start, end = period_end)
-# alpha.run_simulation()
+# print(ticker_dfs)
+testfor = 20
+tickers =tickers[:testfor]
+alpha = Alpha(insts=tickers, dfs = ticker_dfs, start=period_start, end = period_end)
+alpha.run_simulation()
